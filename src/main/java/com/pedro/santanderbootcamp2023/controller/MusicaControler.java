@@ -24,6 +24,24 @@ public class MusicaControler {
         return ResponseEntity.ok(musicas);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Musica> findById(@PathVariable Long id){
+        Musica musica = musicService.findById(id);
+        return ResponseEntity.ok(musica);
+    }
+
+    @GetMapping(value = "/busca")
+    public ResponseEntity<List<Musica> > findById(@RequestParam(name = "nome", defaultValue = "") String nome){
+        List<Musica>  musicas = musicService.findByNome(nome);
+        return ResponseEntity.ok(musicas);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        musicService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
     @PostMapping
     public ResponseEntity<Musica> create(@RequestBody Musica musica){
         Musica musicaCriada = musicService.create(musica);
